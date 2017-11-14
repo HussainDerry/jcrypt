@@ -4,6 +4,7 @@ import com.github.hussainderry.crypto.FileEncryptorAES;
 import com.github.hussainderry.model.Command;
 import javafx.concurrent.Task;
 
+import javax.crypto.Cipher;
 import java.io.*;
 
 /**
@@ -31,7 +32,14 @@ public class AsyncEncryptionTask extends Task<Void>{
     @Override
     protected Void call() throws Exception {
         updateMessage(Command.STARTED);
-        FileEncryptorAES mEncryptorAES = FileEncryptorAES.createEncryptorWithHighSecurityParams(mPassword);
+        FileEncryptorAES mEncryptorAES;
+
+        if(checkJCEPolicy()){
+            mEncryptorAES = FileEncryptorAES.createEncryptorWithHighSecurityParams(mPassword);
+        }else{
+            mEncryptorAES = FileEncryptorAES.createEncryptorWithMinimumSecurityParams(mPassword);
+        }
+
         mEncryptorAES.setProgressMonitor(this::update);
         try {
             mEncryptorAES.encrypt(
@@ -48,5 +56,13 @@ public class AsyncEncryptionTask extends Task<Void>{
 
     private void update(int progress){
         this.updateProgress(progress, 100);
+    }
+
+    private boolean checkJCEPolicy(){
+        try {
+            return Cipher.getMaxAllowedKeyLength("AES") == 256;
+        } catch (Exception e){
+            return false;
+        }
     }
 }
