@@ -60,8 +60,10 @@ public class AsyncEncryptionTask extends Task<Void>{
 
     private boolean checkJCEPolicy(){
         try {
-            return Cipher.getMaxAllowedKeyLength("AES") == 256;
+            int length = Cipher.getMaxAllowedKeyLength("AES");
+            return length == 256 || length == Integer.MAX_VALUE;
         } catch (Exception e){
+            e.printStackTrace();
             return false;
         }
     }
