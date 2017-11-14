@@ -9,9 +9,7 @@ Java file encryption utility
 
 ## Usage
 
-* Download the latest version from 
-
-  [here]: https://github.com/HussainDerry/jcrypt/tree/master/dist
+* Download the latest version from [here]:(dist/jcrypt-1.1.0.jar)
 
 * Run the jar file using the following command:
 
