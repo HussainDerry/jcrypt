@@ -2,6 +2,10 @@
 
 Java file encryption utility
 
+## Screenshots
+
+![Main Screen](screenshots/app_screen.png)
+
 ## Requirements
 
 * Java version 8 or newer.
