@@ -16,7 +16,6 @@
 package com.github.hussainderry.task;
 
 import com.github.hussainderry.crypto.FileDecryptorAES;
-import com.github.hussainderry.crypto.FileEncryptorAES;
 import com.github.hussainderry.model.Command;
 import javafx.concurrent.Task;
 

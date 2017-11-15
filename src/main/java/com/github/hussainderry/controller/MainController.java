@@ -16,13 +16,16 @@
 package com.github.hussainderry.controller;
 
 import com.github.hussainderry.model.Command;
-import com.github.hussainderry.model.StringResources;
 import com.github.hussainderry.model.Mode;
+import com.github.hussainderry.model.StringResources;
 import com.github.hussainderry.task.AsyncDecryptionTask;
 import com.github.hussainderry.task.AsyncEncryptionTask;
 import com.github.hussainderry.ui.PasswordDialog;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -196,6 +199,10 @@ public class MainController {
                     this.isRunning = false;
                     break;
                 }
+                default:{
+                    mLogger.warning("Unknown Message");
+                    break;
+                }
             }
         });
         new Thread(mTask).start();
@@ -239,6 +246,10 @@ public class MainController {
                     showInfoDialog(message);
                     lockUI(false);
                     this.isRunning = false;
+                    break;
+                }
+                default:{
+                    mLogger.warning("Unknown Message");
                     break;
                 }
             }
@@ -292,7 +303,6 @@ public class MainController {
                 event.consume();
             }else{
                 mLogger.info("Exiting ...");
-                System.exit(0);
             }
         });
     }
