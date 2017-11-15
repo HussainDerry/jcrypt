@@ -21,6 +21,7 @@ import com.github.hussainderry.model.StringResources;
 import com.github.hussainderry.task.AsyncDecryptionTask;
 import com.github.hussainderry.task.AsyncEncryptionTask;
 import com.github.hussainderry.ui.PasswordDialog;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -303,6 +304,7 @@ public class MainController {
                 event.consume();
             }else{
                 mLogger.info("Exiting ...");
+                Platform.exit();
             }
         });
     }
