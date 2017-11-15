@@ -21,6 +21,7 @@ import javafx.concurrent.Task;
 
 import javax.crypto.Cipher;
 import java.io.*;
+import java.util.logging.Logger;
 
 /**
  * An asynchronous encryption task.
@@ -29,6 +30,7 @@ import java.io.*;
  */
 public class AsyncEncryptionTask extends Task<Void>{
 
+    private final Logger mLogger;
     private final String mPassword;
     private final File mSource;
     private final File mTarget;
@@ -42,6 +44,7 @@ public class AsyncEncryptionTask extends Task<Void>{
         this.mSource = mSource;
         this.mTarget = mTarget;
         this.mPassword = mPassword;
+        this.mLogger = Logger.getLogger(AsyncEncryptionTask.class.getName());
     }
 
     @Override
@@ -61,7 +64,7 @@ public class AsyncEncryptionTask extends Task<Void>{
                     new BufferedInputStream(new FileInputStream(mSource)),
                     new BufferedOutputStream(new FileOutputStream(mTarget)));
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            mLogger.severe(e.getMessage());
             updateMessage(Command.ERROR);
             return null;
         }
@@ -78,7 +81,7 @@ public class AsyncEncryptionTask extends Task<Void>{
             int length = Cipher.getMaxAllowedKeyLength("AES");
             return length == 256 || length == Integer.MAX_VALUE;
         } catch (Exception e){
-            e.printStackTrace();
+            mLogger.warning(e.getMessage());
             return false;
         }
     }

@@ -20,6 +20,7 @@ import com.github.hussainderry.model.Command;
 import javafx.concurrent.Task;
 
 import java.io.*;
+import java.util.logging.Logger;
 
 /**
  * An asynchronous decryption task.
@@ -28,6 +29,7 @@ import java.io.*;
  */
 public class AsyncDecryptionTask extends Task<Void> {
 
+    private final Logger mLogger;
     private final String mPassword;
     private final File mSource;
     private final File mTarget;
@@ -38,6 +40,7 @@ public class AsyncDecryptionTask extends Task<Void> {
      * @param mTarget The file to save to
      */
     public AsyncDecryptionTask(String mPassword, File mSource, File mTarget) {
+        this.mLogger = Logger.getLogger(AsyncDecryptionTask.class.getName());
         this.mSource = mSource;
         this.mTarget = mTarget;
         this.mPassword = mPassword;
@@ -52,15 +55,15 @@ public class AsyncDecryptionTask extends Task<Void> {
             mFileDecryptor.decrypt(
                     new BufferedInputStream(new FileInputStream(mSource)),
                     new BufferedOutputStream(new FileOutputStream(mTarget)));
-        }catch(FileNotFoundException | IllegalStateException e){
-            e.printStackTrace();
-            if(e instanceof IllegalStateException){
-                if(e.getMessage().contains("Invalid password")){
-                    updateMessage(Command.WRONG_PASSWORD);
-                }else{
-                    updateMessage(Command.ERROR);
-                }
+        }catch(FileNotFoundException e){
+            mLogger.severe(e.getMessage());
+            updateMessage(Command.ERROR);
+            return null;
+        }catch(IllegalStateException e){
+            if(e.getMessage().contains("Invalid password")){
+                updateMessage(Command.WRONG_PASSWORD);
             }else{
+                mLogger.severe(e.getMessage());
                 updateMessage(Command.ERROR);
             }
             return null;
