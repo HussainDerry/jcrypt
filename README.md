@@ -1,5 +1,7 @@
 # JCrypt
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/125a2f6e8eb14ac6be32523e6da59cd7)](https://www.codacy.com/app/hussain.derry/jcrypt?utm_source=github.com&utm_medium=referral&utm_content=HussainDerry/jcrypt&utm_campaign=badger)
+
 Java file encryption utility
 
 ## Screenshots
