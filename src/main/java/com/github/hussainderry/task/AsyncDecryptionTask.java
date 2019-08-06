@@ -52,9 +52,9 @@ public class AsyncDecryptionTask extends Task<Void> {
         FileDecryptorAES mFileDecryptor = new FileDecryptorAES(mPassword);
         mFileDecryptor.setProgressMonitor(this::update);
         try{
-            mFileDecryptor.decrypt(
-                    new BufferedInputStream(new FileInputStream(mSource)),
-                    new BufferedOutputStream(new FileOutputStream(mTarget)));
+            BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(mTarget));
+            mFileDecryptor.decrypt(new BufferedInputStream(new FileInputStream(mSource)), outputStream);
+            outputStream.close();
         }catch(FileNotFoundException e){
             mLogger.severe(e.getMessage());
             updateMessage(Command.ERROR);
